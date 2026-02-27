@@ -208,12 +208,6 @@ function SheetHolder() {
               ⭐⭐⭐⭐⭐ <span className="review-count">(127 değerlendirme)</span>
             </div>
 
-            <div className="price-section">
-              <span className="price">₺149,90</span>
-              <span className="old-price">₺199,90</span>
-              <span className="discount-badge">%25 İndirim</span>
-            </div>
-
             <p className="product-intro">
               Çarşaflarınızın kaymasına ve dağılmasına son veren yenilikçi çözüm!
               NOVA Çarşaf Aparatı ile her sabah düzenli bir yatakla uyanın.
