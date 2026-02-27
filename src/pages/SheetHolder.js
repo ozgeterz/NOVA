@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { turkeyData } from '../data/turkeyData';
 import './ProductPage.css';
 import img1 from '../assets/ÇARŞAFLARI KİLİTLE.png';
