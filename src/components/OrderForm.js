@@ -1,0 +1,242 @@
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { turkeyData } from '../data/turkeyData';
+import './OrderForm.css';
+
+function OrderForm({ productName, productOptions = [], useCards = false }) {
+  const navigate = useNavigate();
+  const [formData, setFormData] = useState({
+    firstName: '',
+    lastName: '',
+    phone: '',
+    province: '',
+    district: '',
+    address: '',
+    product: productOptions.length > 0 ? (useCards ? productOptions[0].name : productOptions[0]) : productName,
+    selectedProductIndex: 0
+  });
+
+  const [districts, setDistricts] = useState([]);
+
+  const handleProvinceChange = (e) => {
+    const selectedProvince = e.target.value;
+    setFormData({
+      ...formData,
+      province: selectedProvince,
+      district: ''
+    });
+    setDistricts(turkeyData[selectedProvince] || []);
+  };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    
+    if (name === 'phone') {
+      const numericValue = value.replace(/\D/g, '');
+      if (numericValue.length <= 10) {
+        setFormData({ ...formData, [name]: numericValue });
+      }
+    } else {
+      setFormData({ ...formData, [name]: value });
+    }
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    
+    if (!formData.firstName || !formData.lastName || !formData.phone || 
+        !formData.province || !formData.district || !formData.address) {
+      alert('Lütfen tüm alanları doldurunuz.');
+      return;
+    }
+
+    if (formData.phone.length !== 10) {
+      alert('Lütfen geçerli bir telefon numarası giriniz (10 hane).');
+      return;
+    }
+
+    const orderData = {
+      ...formData,
+      fullPhone: `+90${formData.phone}`
+    };
+    
+    console.log('Sipariş Bilgileri:', orderData);
+    
+    navigate('/tesekkurler', { state: { orderData } });
+  };
+
+  const provinces = Object.keys(turkeyData).sort();
+
+  return (
+    <div className="order-form-container">
+      <h2 className="form-title">Sipariş Formu</h2>
+      <form onSubmit={handleSubmit} className="order-form">
+        <div className="form-row">
+          <div className="form-group">
+            <label htmlFor="firstName">İsim *</label>
+            <input
+              type="text"
+              id="firstName"
+              name="firstName"
+              value={formData.firstName}
+              onChange={handleChange}
+              placeholder="İsminizi giriniz"
+              required
+            />
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="lastName">Soyisim *</label>
+            <input
+              type="text"
+              id="lastName"
+              name="lastName"
+              value={formData.lastName}
+              onChange={handleChange}
+              placeholder="Soyisminizi giriniz"
+              required
+            />
+          </div>
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="phone">Telefon *</label>
+          <div className="phone-input-wrapper">
+            <span className="phone-prefix">+90</span>
+            <input
+              type="tel"
+              id="phone"
+              name="phone"
+              value={formData.phone}
+              onChange={handleChange}
+              placeholder="5XX XXX XX XX"
+              maxLength="10"
+              required
+            />
+          </div>
+          <small className="input-hint">10 haneli telefon numaranızı giriniz</small>
+        </div>
+
+        <div className="form-row">
+          <div className="form-group">
+            <label htmlFor="province">İl *</label>
+            <select
+              id="province"
+              name="province"
+              value={formData.province}
+              onChange={handleProvinceChange}
+              required
+            >
+              <option value="">İl Seçiniz</option>
+              {provinces.map((province) => (
+                <option key={province} value={province}>
+                  {province}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="district">İlçe *</label>
+            <select
+              id="district"
+              name="district"
+              value={formData.district}
+              onChange={handleChange}
+              disabled={!formData.province}
+              required
+            >
+              <option value="">İlçe Seçiniz</option>
+              {districts.map((district) => (
+                <option key={district} value={district}>
+                  {district}
+                </option>
+              ))}
+            </select>
+          </div>
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="address">Adres *</label>
+          <textarea
+            id="address"
+            name="address"
+            value={formData.address}
+            onChange={handleChange}
+            placeholder="Mahalle, sokak, bina no, daire no vb."
+            rows="4"
+            required
+          />
+        </div>
+
+        {productOptions.length > 0 && !useCards && (
+          <div className="form-group">
+            <label htmlFor="product">Ürün Seçimi *</label>
+            <select
+              id="product"
+              name="product"
+              value={formData.product}
+              onChange={handleChange}
+              required
+            >
+              {productOptions.map((option, index) => (
+                <option key={index} value={option}>
+                  {option}
+                </option>
+              ))}
+            </select>
+          </div>
+        )}
+
+        {productOptions.length > 0 && useCards && (
+          <div className="form-group">
+            <label>Ürün Seçimi *</label>
+            <div className="product-cards">
+              {productOptions.map((option, index) => (
+                <div
+                  key={index}
+                  className={`product-card-option ${
+                    formData.selectedProductIndex === index ? 'selected' : ''
+                  }`}
+                  onClick={() => {
+                    setFormData({
+                      ...formData,
+                      product: option.name,
+                      selectedProductIndex: index
+                    });
+                  }}
+                >
+                  <div className="product-card-content">
+                    <div className="product-card-info">
+                      <h4>{option.name}</h4>
+                      {option.description && (
+                        <p className="product-card-description">{option.description}</p>
+                      )}
+                    </div>
+                    <div className="product-card-price">
+                      <span className="card-price">{option.price}</span>
+                      {option.oldPrice && (
+                        <span className="card-old-price">{option.oldPrice}</span>
+                      )}
+                    </div>
+                  </div>
+                  <div className="product-card-check">
+                    {formData.selectedProductIndex === index && (
+                      <span className="checkmark">✓</span>
+                    )}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        <button type="submit" className="submit-button">
+          Siparişi Tamamla
+        </button>
+      </form>
+    </div>
+  );
+}
+
+export default OrderForm;

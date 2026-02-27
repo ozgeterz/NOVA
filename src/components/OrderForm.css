@@ -1,0 +1,379 @@
+.order-form-container {
+  background: white;
+  padding: 40px;
+  border-radius: 16px;
+  box-shadow: 0 8px 30px rgba(10, 36, 99, 0.15);
+  margin-top: 40px;
+  border: 2px solid #f0f9ff;
+}
+
+.form-title {
+  font-size: 32px;
+  color: #0a2463;
+  margin-bottom: 30px;
+  text-align: center;
+  font-weight: 700;
+  position: relative;
+  padding-bottom: 15px;
+}
+
+.form-title::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 3px;
+  background: linear-gradient(to right, #0a2463, #3dd5f3);
+  border-radius: 2px;
+}
+
+.order-form {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  font-size: 15px;
+  font-weight: 600;
+  color: #0a2463;
+  margin-bottom: 8px;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  width: 100%;
+  padding: 12px 15px;
+  font-size: 15px;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  font-family: inherit;
+  background: white;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: #3dd5f3;
+  box-shadow: 0 0 0 3px rgba(61, 213, 243, 0.1);
+}
+
+.form-group select {
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%230a2463' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 15px center;
+  padding-right: 40px;
+}
+
+.form-group select:disabled {
+  background-color: #f5f5f5;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.form-group textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+.phone-input-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.phone-prefix {
+  padding: 12px 15px;
+  background: #f0f9ff;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 600;
+  color: #0a2463;
+  white-space: nowrap;
+}
+
+.phone-input-wrapper input {
+  flex: 1;
+}
+
+.input-hint {
+  display: block;
+  margin-top: 5px;
+  font-size: 13px;
+  color: #666;
+}
+
+.submit-button {
+  width: 100%;
+  padding: 16px;
+  background: linear-gradient(135deg, #0a2463 0%, #3dd5f3 100%);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 18px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  margin-top: 10px;
+  box-shadow: 0 4px 15px rgba(61, 213, 243, 0.3);
+}
+
+.submit-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(61, 213, 243, 0.5);
+}
+
+.submit-button:active {
+  transform: translateY(0);
+}
+
+.product-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-top: 10px;
+}
+
+.product-card-option {
+  border: 3px solid #e0e0e0;
+  border-radius: 12px;
+  padding: 20px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  background: white;
+  position: relative;
+}
+
+.product-card-option:hover {
+  border-color: #3dd5f3;
+  box-shadow: 0 4px 12px rgba(61, 213, 243, 0.2);
+  transform: translateY(-2px);
+}
+
+.product-card-option.selected {
+  border-color: #0a2463;
+  background: linear-gradient(to right, #f0f9ff, #ffffff);
+  box-shadow: 0 6px 20px rgba(10, 36, 99, 0.15);
+}
+
+.product-card-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+}
+
+.product-card-info {
+  flex: 1;
+}
+
+.product-card-info h4 {
+  font-size: 18px;
+  font-weight: 700;
+  color: #0a2463;
+  margin: 0 0 8px 0;
+}
+
+.product-card-description {
+  font-size: 14px;
+  color: #666;
+  margin: 0;
+  line-height: 1.5;
+}
+
+.product-card-price {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 5px;
+}
+
+.card-price {
+  font-size: 24px;
+  font-weight: 700;
+  color: #0a2463;
+}
+
+.card-old-price {
+  font-size: 16px;
+  color: #999;
+  text-decoration: line-through;
+}
+
+.product-card-check {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: #3dd5f3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.product-card-option.selected .product-card-check {
+  opacity: 1;
+}
+
+.checkmark {
+  color: white;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+@media (max-width: 768px) {
+  .order-form-container {
+    padding: 30px 20px;
+  }
+
+  .form-title {
+    font-size: 26px;
+  }
+
+  .form-row {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  .form-group {
+    margin-bottom: 18px;
+  }
+
+  .form-group label {
+    font-size: 14px;
+  }
+
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    padding: 11px 13px;
+    font-size: 14px;
+  }
+
+  .phone-prefix {
+    padding: 11px 13px;
+    font-size: 14px;
+  }
+
+  .submit-button {
+    padding: 14px;
+    font-size: 16px;
+  }
+
+  .product-card-option {
+    padding: 16px;
+  }
+
+  .product-card-content {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .product-card-info h4 {
+    font-size: 16px;
+  }
+
+  .product-card-price {
+    align-items: flex-start;
+  }
+
+  .card-price {
+    font-size: 20px;
+  }
+
+  .card-old-price {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .order-form-container {
+    padding: 25px 15px;
+  }
+
+  .form-title {
+    font-size: 24px;
+    margin-bottom: 25px;
+  }
+
+  .form-group {
+    margin-bottom: 16px;
+  }
+
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    padding: 10px 12px;
+    font-size: 13px;
+  }
+
+  .phone-prefix {
+    padding: 10px 12px;
+    font-size: 13px;
+  }
+
+  .submit-button {
+    padding: 13px;
+    font-size: 15px;
+  }
+
+  .product-cards {
+    gap: 12px;
+  }
+
+  .product-card-option {
+    padding: 14px;
+  }
+
+  .product-card-info h4 {
+    font-size: 15px;
+    margin-bottom: 6px;
+  }
+
+  .product-card-description {
+    font-size: 13px;
+  }
+
+  .card-price {
+    font-size: 18px;
+  }
+
+  .card-old-price {
+    font-size: 13px;
+  }
+
+  .product-card-check {
+    width: 26px;
+    height: 26px;
+    top: 12px;
+    right: 12px;
+  }
+
+  .checkmark {
+    font-size: 16px;
+  }
+}
