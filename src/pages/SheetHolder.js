@@ -64,6 +64,14 @@ function SheetHolder() {
     setDistricts(turkeyData[selectedProvince] || []);
   };
 
+  const formatPhoneNumber = (value) => {
+    if (!value) return '';
+    if (value.length <= 3) return value;
+    if (value.length <= 6) return `${value.slice(0, 3)} ${value.slice(3)}`;
+    if (value.length <= 8) return `${value.slice(0, 3)} ${value.slice(3, 6)} ${value.slice(6)}`;
+    return `${value.slice(0, 3)} ${value.slice(3, 6)} ${value.slice(6, 8)} ${value.slice(8, 10)}`;
+  };
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     if (name === 'phone') {
@@ -90,14 +98,16 @@ function SheetHolder() {
       return;
     }
 
-    if (formData.phone.length !== 10) {
+    const cleanPhone = formData.phone.replace(/\D/g, '');
+    if (cleanPhone.length !== 10) {
       alert('Lütfen geçerli bir telefon numarası giriniz (10 hane).');
       return;
     }
 
     const orderData = {
       ...formData,
-      fullPhone: `+90${formData.phone}`
+      fullPhone: `+90${cleanPhone}`,
+      phone: cleanPhone
     };
 
     console.log('Sipariş Bilgileri:', orderData);
@@ -375,10 +385,9 @@ function SheetHolder() {
                   type="tel"
                   id="phone"
                   name="phone"
-                  value={formData.phone}
+                  value={formatPhoneNumber(formData.phone)}
                   onChange={handleChange}
                   placeholder="5XX XXX XX XX"
-                  maxLength="10"
                   required
                 />
               </div>
@@ -439,11 +448,11 @@ function SheetHolder() {
 
             <div className="form-group">
               <label>Ürün Seçimi *</label>
-              <div className="product-radio-list">
+              <div className="product-selection-cards">
                 {productOptions.map((option, index) => (
                   <div
                     key={index}
-                    className="product-radio-item"
+                    className={`product-selection-card ${formData.selectedProductIndex === index ? 'active' : ''}`}
                     onClick={() => {
                       setFormData({
                         ...formData,
@@ -452,28 +461,15 @@ function SheetHolder() {
                       });
                     }}
                   >
-                    <input
-                      type="radio"
-                      name="product"
-                      id={`product-${index}`}
-                      checked={formData.selectedProductIndex === index}
-                      onChange={(e) => {
-                        e.stopPropagation();
-                        setFormData({
-                          ...formData,
-                          product: option.name,
-                          selectedProductIndex: index
-                        });
-                      }}
-                    />
-                    <div className="product-radio-content">
-                      <label htmlFor={`product-${index}`} className="product-radio-label">
-                        {option.name}
-                      </label>
-                      <div className="product-radio-pricing">
-                        <span className="product-price">{option.price}</span>
-                        <span className="product-shipping">{option.shipping}</span>
-                      </div>
+                    {formData.selectedProductIndex === index && (
+                      <div className="selected-badge">✓ Seçildi</div>
+                    )}
+                    <div className="product-card-header">
+                      <h3 className="product-card-title">{option.name}</h3>
+                    </div>
+                    <div className="product-card-pricing">
+                      <div className="price-main">{option.price}</div>
+                      <div className="price-shipping">{option.shipping}</div>
                     </div>
                   </div>
                 ))}
