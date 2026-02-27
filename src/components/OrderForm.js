@@ -61,6 +61,41 @@ function OrderForm({ productName, productOptions = [], useCards = false }) {
     };
     
     console.log('Sipariş Bilgileri:', orderData);
+
+    // Google Forms integration
+    const GOOGLE_FORM_ACTION_URL = 'https://docs.google.com/forms/d/e/FORM_ID_BURAYA/formResponse';
+    
+    const GOOGLE_FORM_ENTRIES = {
+      firstName: 'entry.XXXXXXX1',
+      lastName: 'entry.XXXXXXX2',
+      phone: 'entry.XXXXXXX3',
+      province: 'entry.XXXXXXX4',
+      district: 'entry.XXXXXXX5',
+      address: 'entry.XXXXXXX6',
+      product: 'entry.XXXXXXX7'
+    };
+
+    const formBody = new URLSearchParams();
+    formBody.append(GOOGLE_FORM_ENTRIES.firstName, formData.firstName);
+    formBody.append(GOOGLE_FORM_ENTRIES.lastName, formData.lastName);
+    formBody.append(GOOGLE_FORM_ENTRIES.phone, `+90${formData.phone}`);
+    formBody.append(GOOGLE_FORM_ENTRIES.province, formData.province);
+    formBody.append(GOOGLE_FORM_ENTRIES.district, formData.district);
+    formBody.append(GOOGLE_FORM_ENTRIES.address, formData.address);
+    formBody.append(GOOGLE_FORM_ENTRIES.product, formData.product);
+
+    try {
+      fetch(GOOGLE_FORM_ACTION_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: formBody.toString()
+      });
+    } catch (error) {
+      console.error('Form gönderim hatası:', error);
+    }
     
     navigate('/tesekkurler', { state: { orderData } });
   };

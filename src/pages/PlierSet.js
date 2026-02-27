@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import OrderForm from '../components/OrderForm';
 import './ProductPage.css';
 
 function PlierSet() {
@@ -168,13 +167,7 @@ function PlierSet() {
           </div>
         </div>
 
-        <OrderForm 
-          productName="5'li Profesyonel Pense Seti" 
-          productOptions={[
-            "5'li Profesyonel Pense Seti - Standart",
-            "5'li Profesyonel Pense Seti - Premium (Çantalı)"
-          ]}
-        />
+        {/* Form kaldırıldı - ürün gizli */}
       </div>
     </div>
   );

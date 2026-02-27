@@ -1,13 +1,35 @@
-import React from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import './Home.css';
+import logo from '../assets/nova logo.png';
+import img1 from '../assets/ÇARŞAFLARI KİLİTLE.png';
+import img2 from '../assets/MONTAJ YÖNTEMLERİ.png';
+import img3 from '../assets/NOVA İLE ÇARŞAFLARI KİLİTLE.png';
+import img4 from '../assets/ÖNCE.png';
+
+const productImages = [img1, img2, img3, img4];
 
 function Home() {
+  const [currentSlide, setCurrentSlide] = useState(0);
+
+  const nextSlide = useCallback(() => {
+    setCurrentSlide((prev) => (prev + 1) % productImages.length);
+  }, []);
+
+  const prevSlide = () => {
+    setCurrentSlide((prev) => (prev - 1 + productImages.length) % productImages.length);
+  };
+
+  useEffect(() => {
+    const timer = setInterval(nextSlide, 4000);
+    return () => clearInterval(timer);
+  }, [nextSlide]);
+
   return (
     <div className="home">
       <header className="hero">
         <div className="hero-content">
-          <h1 className="brand-name">NOVA</h1>
+          <img src={logo} alt="NOVA Logo" className="hero-logo" />
           <p className="tagline">Evinizin Yeni Nesil Çözüm Ortağı</p>
           <p className="subtitle">Kaliteli, dayanıklı ve pratik ürünlerle hayatınızı kolaylaştırıyoruz</p>
         </div>
@@ -42,9 +64,31 @@ function Home() {
         <h2 className="section-title">Ürünlerimiz</h2>
         <div className="product-grid">
           <div className="product-card">
-            <div className="product-image">
-              <div className="image-placeholder">🛏️</div>
-            </div>
+            <Link to="/carsaf-aparati" className="carousel-link">
+              <div className="product-carousel">
+                <button className="carousel-btn carousel-prev" onClick={(e) => { e.preventDefault(); prevSlide(); }}>‹</button>
+                <div className="carousel-track">
+                  {productImages.map((img, index) => (
+                    <div
+                      key={index}
+                      className={`carousel-slide ${index === currentSlide ? 'active' : ''}`}
+                    >
+                      <img src={img} alt={`Çarşaf Aparatı ${index + 1}`} />
+                    </div>
+                  ))}
+                </div>
+                <button className="carousel-btn carousel-next" onClick={(e) => { e.preventDefault(); nextSlide(); }}>›</button>
+                <div className="carousel-dots">
+                  {productImages.map((_, index) => (
+                    <button
+                      key={index}
+                      className={`carousel-dot ${index === currentSlide ? 'active' : ''}`}
+                      onClick={(e) => { e.preventDefault(); setCurrentSlide(index); }}
+                    />
+                  ))}
+                </div>
+              </div>
+            </Link>
             <div className="product-info">
               <h3>Çarşaf Aparatı</h3>
               <p className="product-description">
@@ -58,28 +102,6 @@ function Home() {
                 <li>Çarşafları sabit tutar</li>
               </ul>
               <Link to="/carsaf-aparati" className="product-link">
-                Detaylı İncele →
-              </Link>
-            </div>
-          </div>
-
-          <div className="product-card">
-            <div className="product-image">
-              <div className="image-placeholder">🔧</div>
-            </div>
-            <div className="product-info">
-              <h3>5'li Pense Seti</h3>
-              <p className="product-description">
-                Her türlü iş için ihtiyacınız olan profesyonel pense seti. 
-                Evinizin vazgeçilmez aracı!
-              </p>
-              <ul className="product-features">
-                <li>5 farklı pense tipi</li>
-                <li>Ergonomik tutma sapları</li>
-                <li>Paslanmaz çelik</li>
-                <li>Taşıma çantası dahil</li>
-              </ul>
-              <Link to="/pense-seti" className="product-link">
                 Detaylı İncele →
               </Link>
             </div>
