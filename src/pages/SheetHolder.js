@@ -429,7 +429,7 @@ function SheetHolder() {
               </div>
             </div>
 
-            <div className="form-group">
+            {/* <div className="form-group">
               <label>Kargo Seçimi *</label>
               <div className="radio-cards">
                 <div
@@ -449,7 +449,7 @@ function SheetHolder() {
                   {formData.shippingMethod === 'PTT Kargo' && <span className="radio-check">✓</span>}
                 </div>
               </div>
-            </div>
+            </div> */}
 
             <button type="submit" className="submit-button">
               Siparişi Tamamla
@@ -479,7 +479,7 @@ function SheetHolder() {
               </div>
 
               <div className="modal-section">
-                <h3>💳 {formData.paymentMethod} • {formData.shippingMethod}</h3>
+                <h3>💳 {formData.paymentMethod}</h3>
               </div>
             </div>
 
