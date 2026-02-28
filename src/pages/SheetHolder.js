@@ -137,15 +137,17 @@ function SheetHolder() {
       shippingMethod: 'entry.806943079'
     };
 
+    const formattedPhone = `0${cleanPhone.slice(0, 3)} ${cleanPhone.slice(3, 6)} ${cleanPhone.slice(6, 8)} ${cleanPhone.slice(8, 10)}`;
+    
     const formBody = new URLSearchParams();
     formBody.append(GOOGLE_FORM_ENTRIES.firstName, formData.firstName);
     formBody.append(GOOGLE_FORM_ENTRIES.lastName, formData.lastName);
-    formBody.append(GOOGLE_FORM_ENTRIES.phone, `+90${formData.phone}`);
+    formBody.append(GOOGLE_FORM_ENTRIES.phone, formattedPhone);
     formBody.append(GOOGLE_FORM_ENTRIES.province, formData.province);
     formBody.append(GOOGLE_FORM_ENTRIES.district, formData.district);
     formBody.append(GOOGLE_FORM_ENTRIES.address, formData.address);
     formBody.append(GOOGLE_FORM_ENTRIES.product, formData.product);
-    formBody.append(GOOGLE_FORM_ENTRIES.price, productOptions[formData.selectedProductIndex].price);
+    formBody.append(GOOGLE_FORM_ENTRIES.price, productOptions[formData.selectedProductIndex].total);
     formBody.append(GOOGLE_FORM_ENTRIES.paymentMethod, formData.paymentMethod);
     formBody.append(GOOGLE_FORM_ENTRIES.shippingMethod, formData.shippingMethod);
 
