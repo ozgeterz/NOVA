@@ -8,9 +8,6 @@ import img3 from '../assets/ÖNCE.png';
 import img2 from '../assets/GEMİNİ.png';
 import img5 from '../assets/MONTAJ YÖNTEMLERİ.png';
 
-import arasLogo from '../assets/Aras logo.png';
-import pttLogo from '../assets/Ptt logo.png';
-
 const productOptions = [
   {
     name: "1 Set (4 Adet)",
