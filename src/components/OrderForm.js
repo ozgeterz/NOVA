@@ -17,6 +17,7 @@ function OrderForm({ productName, productOptions = [], useCards = false }) {
   });
 
   const [districts, setDistricts] = useState([]);
+  const [showConfirmModal, setShowConfirmModal] = useState(false);
 
   const handleProvinceChange = (e) => {
     const selectedProvince = e.target.value;
@@ -54,6 +55,11 @@ function OrderForm({ productName, productOptions = [], useCards = false }) {
       alert('Lütfen geçerli bir telefon numarası giriniz (10 hane).');
       return;
     }
+
+    setShowConfirmModal(true);
+  };
+
+  const handleConfirmOrder = () => {
 
     const orderData = {
       ...formData,
@@ -97,6 +103,7 @@ function OrderForm({ productName, productOptions = [], useCards = false }) {
       console.error('Form gönderim hatası:', error);
     }
     
+    setShowConfirmModal(false);
     navigate('/tesekkurler', { state: { orderData } });
   };
 
@@ -270,6 +277,45 @@ function OrderForm({ productName, productOptions = [], useCards = false }) {
           Siparişi Tamamla
         </button>
       </form>
+
+      {showConfirmModal && (
+        <div className="modal-overlay" onClick={() => setShowConfirmModal(false)}>
+          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+            <div className="modal-header">
+              <h2>Siparişinizi Onaylayın</h2>
+              <button className="modal-close" onClick={() => setShowConfirmModal(false)}>×</button>
+            </div>
+            
+            <div className="modal-body">
+              <div className="modal-section">
+                <h3>📦 Ürün Bilgisi</h3>
+                <p className="modal-info"><strong>{formData.product}</strong></p>
+              </div>
+
+              <div className="modal-section">
+                <h3>👤 Müşteri Bilgileri</h3>
+                <p className="modal-info">{formData.firstName} {formData.lastName}</p>
+                <p className="modal-info">+90 {formData.phone}</p>
+              </div>
+
+              <div className="modal-section">
+                <h3>📍 Teslimat Adresi</h3>
+                <p className="modal-info">{formData.province} / {formData.district}</p>
+                <p className="modal-info">{formData.address}</p>
+              </div>
+            </div>
+
+            <div className="modal-footer">
+              <button className="modal-button modal-cancel" onClick={() => setShowConfirmModal(false)}>
+                İptal
+              </button>
+              <button className="modal-button modal-confirm" onClick={handleConfirmOrder}>
+                ✓ Siparişi Onayla
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

@@ -2,10 +2,12 @@ import React, { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { turkeyData } from '../data/turkeyData';
 import './ProductPage.css';
-import img1 from '../assets/ÇARŞAFLARI KİLİTLE.png';
-import img2 from '../assets/MONTAJ YÖNTEMLERİ.png';
-import img3 from '../assets/NOVA İLE ÇARŞAFLARI KİLİTLE.png';
-import img4 from '../assets/ÖNCE.png';
+import img4 from '../assets/ÇARŞAFLARI KİLİTLE.png';
+import img1 from '../assets/NOVA İLE ÇARŞAFLARI KİLİTLE.png';
+import img3 from '../assets/ÖNCE.png';
+import img2 from '../assets/GEMİNİ.png';
+import img5 from '../assets/MONTAJ YÖNTEMLERİ.png';
+
 import arasLogo from '../assets/Aras logo.png';
 import pttLogo from '../assets/Ptt logo.png';
 
@@ -48,6 +50,7 @@ function SheetHolder() {
   });
 
   const [districts, setDistricts] = useState([]);
+  const [showConfirmModal, setShowConfirmModal] = useState(false);
   const provinces = Object.keys(turkeyData).sort();
 
   const scrollToForm = () => {
@@ -104,6 +107,12 @@ function SheetHolder() {
       return;
     }
 
+    setShowConfirmModal(true);
+  };
+
+  const handleConfirmOrder = () => {
+
+    const cleanPhone = formData.phone.replace(/\D/g, '');
     const orderData = {
       ...formData,
       fullPhone: `+90${cleanPhone}`,
@@ -153,6 +162,7 @@ function SheetHolder() {
       console.error('Form gönderim hatası:', error);
     }
 
+    setShowConfirmModal(false);
     navigate('/tesekkurler', { state: { orderData } });
   };
 
@@ -166,10 +176,7 @@ function SheetHolder() {
 
           <div className="gallery-cta">
             <button className="cta-button cta-primary" onClick={scrollToForm}>
-              🚚 Kapıda Ödeme
-            </button>
-            <button className="cta-button cta-secondary" onClick={scrollToForm}>
-              📦 Şimdi Sipariş Ver
+              🚚 Kapıda Ödeme İle Sipariş Ver
             </button>
           </div>
 
@@ -187,17 +194,12 @@ function SheetHolder() {
             <img src={img3} alt="NOVA ile Çarşafları Kilitle" className="gallery-image" />
           </div>
 
-          <div className="gallery-cta">
-            <button className="cta-button cta-primary" onClick={scrollToForm}>
-              💳 Kapıda Ödeme İmkanı
-            </button>
-            <button className="cta-button cta-secondary" onClick={scrollToForm}>
-              🏠 Adresinize Teslim
-            </button>
+          <div className="gallery-item" onClick={scrollToForm}>
+            <img src={img4} alt="Önce Sonra" className="gallery-image" />
           </div>
 
           <div className="gallery-item" onClick={scrollToForm}>
-            <img src={img4} alt="Önce Sonra" className="gallery-image" />
+            <img src={img5} alt="Montaj Yöntemleri" className="gallery-image" />
           </div>
         </div>
 
@@ -207,12 +209,7 @@ function SheetHolder() {
             <div className="product-rating">
               ⭐⭐⭐⭐⭐ <span className="review-count">(127 değerlendirme)</span>
             </div>
-
-            <p className="product-intro">
-              Çarşaflarınızın kaymasına ve dağılmasına son veren yenilikçi çözüm!
-              NOVA Çarşaf Aparatı ile her sabah düzenli bir yatakla uyanın.
-            </p>
-
+  
             <div className="features-section">
               <h3>Ürün Özellikleri</h3>
               <ul className="feature-list">
@@ -220,86 +217,11 @@ function SheetHolder() {
                 <li>💪 Dayanıklı yapı - Yıllarca kullanım garantisi</li>
                 <li>📏 Evrensel uyum - Tüm yatak boyutlarına uyumlu</li>
                 <li>🧵 Kumaş dostu - Çarşafınıza zarar vermez</li>
-                <li>🔄 Ayarlanabilir - İstediğiniz gerginlikte kullanın</li>
-                <li>🌙 Sessiz kullanım - Gece boyunca rahatsız etmez</li>
-                <li>🧼 Kolay temizlik - Yıkanabilir malzeme</li>
                 <li>📦 4'lü set - Tüm köşeler için yeterli</li>
               </ul>
             </div>
-
-            <div className="technical-specs">
-              <h3>Teknik Özellikler</h3>
-              <table>
-                <tbody>
-                  <tr>
-                    <td>Malzeme:</td>
-                    <td>Premium ABS Plastik + Paslanmaz Çelik</td>
-                  </tr>
-                  <tr>
-                    <td>Renk:</td>
-                    <td>Beyaz</td>
-                  </tr>
-                  <tr>
-                    <td>Paket İçeriği:</td>
-                    <td>4 Adet Çarşaf Aparatı</td>
-                  </tr>
-                  <tr>
-                    <td>Uyumlu Yatak Boyutları:</td>
-                    <td>Tek, Çift, King, Super King</td>
-                  </tr>
-                  <tr>
-                    <td>Garanti:</td>
-                    <td>2 Yıl NOVA Garantisi</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-
-            <button className="buy-button" onClick={scrollToForm}>🛒 Sipariş Ver</button>
-            <button className="wishlist-button" onClick={scrollToForm}>🚚 Kapıda Ödeme ile Al</button>
+            <button className="wishlist-button" onClick={scrollToForm}>📦 Hemen Satın Al</button>
           </div>
-        </div>
-
-        <div className="product-description-section">
-          <h2>Ürün Açıklaması</h2>
-          <p>
-            NOVA Çarşaf Aparatı, modern yaşamın pratik çözümlerinden biri olarak karşınızda.
-            Gece boyunca çarşaflarınızın kayması ve dağılması artık sorun olmayacak.
-            Özellikle hareketli uyuyanlar için ideal olan bu ürün, sabahları düzenli bir
-            yatakla uyanmanızı sağlar.
-          </p>
-          <p>
-            Yüksek kaliteli malzemelerden üretilen çarşaf aparatımız, uzun ömürlü kullanım
-            için tasarlanmıştır. Kumaşa zarar vermeden güvenli bir şekilde tutunur ve
-            istediğiniz gerginlikte ayarlanabilir. Montajı son derece kolaydır ve herhangi
-            bir alet gerektirmez.
-          </p>
-          <p>
-            4'lü set olarak gelen ürün, yatağınızın dört köşesine takılarak çarşafınızı
-            sabit tutar. Beyaz rengi sayesinde her türlü yatak takımıyla uyumludur ve
-            görünmez bir şekilde işlevini yerine getirir.
-          </p>
-
-          <h3>Kullanım Alanları</h3>
-          <ul>
-            <li>Ev yatakları için</li>
-            <li>Çocuk odaları için</li>
-            <li>Misafir odaları için</li>
-            <li>Otel ve pansiyonlar için</li>
-            <li>Yurt odaları için</li>
-          </ul>
-
-          <h3>Neden NOVA Çarşaf Aparatı?</h3>
-          <p>
-            Piyasadaki birçok alternatifin aksine, NOVA Çarşaf Aparatı premium malzemelerden
-            üretilmiştir. Ucuz plastik yerine dayanıklı ABS plastik kullanımı, ürünün
-            ömrünü önemli ölçüde artırır. Paslanmaz çelik klipsler, yıllarca kopmadan
-            kullanım sağlar.
-          </p>
-          <p>
-            Müşteri memnuniyeti odaklı yaklaşımımız sayesinde, 2 yıl garanti sunuyoruz.
-            Ürünümüzden memnun kalmayan müşterilerimiz, 30 gün içinde iade edebilir.
-          </p>
         </div>
 
         <div className="customer-reviews">
@@ -520,6 +442,52 @@ function SheetHolder() {
           </form>
         </div>
       </div>
+
+      {showConfirmModal && (
+        <div className="modal-overlay" onClick={() => setShowConfirmModal(false)}>
+          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+            <div className="modal-header">
+              <h2>Siparişinizi Onaylayın</h2>
+              <button className="modal-close" onClick={() => setShowConfirmModal(false)}>×</button>
+            </div>
+            
+            <div className="modal-body">
+              <div className="modal-section">
+                <h3>📦 Ürün Bilgisi</h3>
+                <p className="modal-info"><strong>{formData.product}</strong></p>
+                <p className="modal-price">{productOptions[formData.selectedProductIndex].total}</p>
+              </div>
+
+              <div className="modal-section">
+                <h3>👤 Müşteri Bilgileri</h3>
+                <p className="modal-info">{formData.firstName} {formData.lastName}</p>
+                <p className="modal-info">+90 {formatPhoneNumber(formData.phone)}</p>
+              </div>
+
+              <div className="modal-section">
+                <h3>📍 Teslimat Adresi</h3>
+                <p className="modal-info">{formData.province} / {formData.district}</p>
+                <p className="modal-info">{formData.address}</p>
+              </div>
+
+              <div className="modal-section">
+                <h3>💳 Ödeme & Kargo</h3>
+                <p className="modal-info">Ödeme: {formData.paymentMethod}</p>
+                <p className="modal-info">Kargo: {formData.shippingMethod}</p>
+              </div>
+            </div>
+
+            <div className="modal-footer">
+              <button className="modal-button modal-cancel" onClick={() => setShowConfirmModal(false)}>
+                İptal
+              </button>
+              <button className="modal-button modal-confirm" onClick={handleConfirmOrder}>
+                ✓ Siparişi Onayla
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

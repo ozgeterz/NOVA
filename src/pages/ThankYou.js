@@ -73,13 +73,6 @@ function ThankYou() {
             Alışverişe Devam Et
           </Link>
         </div>
-
-        <div className="contact-info">
-          <p>Sorularınız için bize ulaşabilirsiniz:</p>
-          <p className="contact-details">
-            📧 info@nova.com.tr | 📞 0850 123 45 67
-          </p>
-        </div>
       </div>
     </div>
   );
