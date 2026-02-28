@@ -8,6 +8,8 @@ function ThankYou() {
   const purchaseTracked = useRef(false);
 
   useEffect(() => {
+    window.scrollTo(0, 0);
+    
     if (!purchaseTracked.current && typeof window.fbq === "function") {
       window.fbq("track", "Purchase");
       purchaseTracked.current = true;
