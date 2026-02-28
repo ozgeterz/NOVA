@@ -1,10 +1,19 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import './ThankYou.css';
 
 function ThankYou() {
   const location = useLocation();
   const orderData = location.state?.orderData || {};
+  const purchaseTracked = useRef(false);
+
+  useEffect(() => {
+    if (!purchaseTracked.current && typeof window.fbq === "function") {
+      window.fbq("track", "Purchase");
+      purchaseTracked.current = true;
+    }
+  }, []);
+
 
   return (
     <div className="thank-you-page">
