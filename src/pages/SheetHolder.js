@@ -468,27 +468,18 @@ function SheetHolder() {
             
             <div className="modal-body">
               <div className="modal-section">
-                <h3>📦 Ürün Bilgisi</h3>
-                <p className="modal-info"><strong>{formData.product}</strong></p>
+                <h3>📦 {formData.product}</h3>
                 <p className="modal-price">{productOptions[formData.selectedProductIndex].total}</p>
               </div>
 
               <div className="modal-section">
-                <h3>👤 Müşteri Bilgileri</h3>
-                <p className="modal-info">{formData.firstName} {formData.lastName}</p>
+                <h3>👤 {formData.firstName} {formData.lastName}</h3>
                 <p className="modal-info">+90 {formatPhoneNumber(formData.phone)}</p>
-              </div>
-
-              <div className="modal-section">
-                <h3>📍 Teslimat Adresi</h3>
                 <p className="modal-info">{formData.province} / {formData.district}</p>
-                <p className="modal-info">{formData.address}</p>
               </div>
 
               <div className="modal-section">
-                <h3>💳 Ödeme & Kargo</h3>
-                <p className="modal-info">Ödeme: {formData.paymentMethod}</p>
-                <p className="modal-info">Kargo: {formData.shippingMethod}</p>
+                <h3>💳 {formData.paymentMethod} • {formData.shippingMethod}</h3>
               </div>
             </div>
 
